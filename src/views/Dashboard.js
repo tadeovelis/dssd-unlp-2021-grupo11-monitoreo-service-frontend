@@ -1,6 +1,8 @@
 import { Card, CardContent, Divider, Grid, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import CardMetrica from "../components/CardMetrica";
+import ListaActiveCases from "../components/ListaActiveCases";
+import ListaArchivedCases from "../components/ListaArchivedCases";
 
 
 export default function Dashboard(props) {
@@ -23,20 +25,23 @@ export default function Dashboard(props) {
                     Métricas del proceso de registro de una Sociedad Anónima
                 </Typography>
 
-                {/* Grid de las dos listas */}
-                <Grid container spacing={2}
+                {/* Box de las dos listas */}
+                <Box
                     sx={{
-                        mb: 4
+                        mb: 4,
+                        display: 'flex',
+                        gap: 10
                     }}
                 >
-                    <Grid item xs={6}>
-                        <span>Lista de casos activos</span>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <span>Lista de casos archivados</span>
-                    </Grid>
-                </Grid>
+                    <Box>
+                        <ListaActiveCases />
+                    </Box>
+                    <Box>
+                        <ListaArchivedCases />
+                    </Box>
+                </Box>
 
+                {/* Divider para separar */}
                 <Divider
                     sx={{
                         my: 4
