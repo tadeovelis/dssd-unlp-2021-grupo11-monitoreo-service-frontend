@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import ListaCasos from "./ListaCasos";
 
@@ -17,12 +17,22 @@ export default function ListaActiveCases(props) {
 
     return (
         <Box>
-            <Typography
-                variant="subtitle1"
-                sx={{ my: 1 }}
-            >
-                Lista de casos <b>activos</b>
-            </Typography>
+            <Grid container sx={{ my: 1 }}>
+                <Grid item xs={8}>
+                    <Typography
+                        variant="subtitle1"
+                    >
+                        Lista de casos <b>activos</b>
+                    </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                    <Typography
+                        variant="subtitle1"
+                    >
+                        Total: <b>3</b>
+                    </Typography>
+                </Grid>
+            </Grid>
             <ListaCasos
                 rows={rows}
             />
