@@ -6,6 +6,9 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { useState } from "react";
 import { useHistory } from "react-router";
 
+import env from "@beam-australia/react-env";
+import { setearCookies } from "../helpers/helpers";
+
 
 export default function Home(props) {
 
@@ -21,19 +24,41 @@ export default function Home(props) {
     }
 
     function handleSubmit(e) {
-        loginExitoso();
+        let ruta = "api/auth/login";
+
+        let data = new FormData();
+        data.append("username", state.email);
+        data.append("password", state.password);
+
+        fetch(env("BACKEND_URL") + ruta, {
+            method: 'POST',
+            credentials: 'include',
+            body: data,
+            /*
+            headers: {
+                'Authorization': 'Bearer ' + getCookie("access_token")
+            }
+            */
+        })
+            .then(response => response.json()
+            .then(data => {
+                //console.log(response);
+                //console.log(data);
+                if (response.ok) loginExitoso(data);
+                else alert("Los datos son incorrectos. Verificalos y volvé a intentar")
+            })
+            .catch(error => console.error(error)));
         e.preventDefault();
     }
 
     function loginExitoso(data) {
 
         // Seteo las cookies
-        //setearCookies(data);
+        setearCookies(data);
 
         let ruta = "/dashboard";
         history.push({
             pathname: ruta,
-            //state: { data: data }
         });
     }
 
