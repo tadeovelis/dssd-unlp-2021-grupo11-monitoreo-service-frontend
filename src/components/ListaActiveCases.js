@@ -82,6 +82,7 @@ export default function ListaActiveCases(props) {
     // Actualizar tabla cuando se actualicen los casos activos
     useEffect(() => {
         let rows = [];
+        if (casosActivos.length)
         casosActivos.map((c) => {
             rows.push(createData(c.id, formatDate(c.start), formatDate(c.last_update_date)))
         });
