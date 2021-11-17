@@ -39,7 +39,7 @@ export default function Dashboard(props) {
                 //console.log(response);
                 console.log("Average time...");
                 console.log(data);
-                setAverageTime(data);
+                setAverageTime(data.toFixed(4));
             })
             .catch(error => console.error(error)));
     }
