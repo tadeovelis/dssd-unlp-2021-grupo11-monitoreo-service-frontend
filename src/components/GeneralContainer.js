@@ -1,4 +1,5 @@
 import { Box } from "@mui/system";
+import Header from "./Header";
 
 
 export default function GeneralContainer(props) {
@@ -7,7 +8,7 @@ export default function GeneralContainer(props) {
     return (
         <>
             {/* Header */}
-
+            <Header location={props.location}/>
             {/* Box general */}
             <Box
                 sx={{

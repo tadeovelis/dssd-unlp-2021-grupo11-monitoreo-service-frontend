@@ -42,8 +42,6 @@ export default function Home(props) {
         })
             .then(response => response.json()
             .then(data => {
-                //console.log(response);
-                //console.log(data);
                 if (response.ok) loginExitoso(data);
                 else alert("Los datos son incorrectos. Verificalos y volvé a intentar")
             })
@@ -52,9 +50,7 @@ export default function Home(props) {
     }
 
     function loginExitoso(data) {
-
-        // Seteo las cookies
-        setearCookies(data);
+        console.log(data);
 
         let ruta = "/dashboard";
         history.push({
