@@ -34,8 +34,8 @@ export default function ListaActiveCases(props) {
     const [cantCasosActivos, setCantCasosActivos] = useState(null);
     const [rows, setRows] = useState([]);
 
-    function createData(id, fecha_inicio, fecha_ultima_actualizacion) {
-        return { id, fecha_inicio, fecha_ultima_actualizacion };
+    function createData(id, fecha_inicio, fecha_ultima_actualizacion, cantidad_rechazos_mesa_entradas, cantidad_rechazos_area_legales) {
+        return { id, fecha_inicio, fecha_ultima_actualizacion, cantidad_rechazos_mesa_entradas, cantidad_rechazos_area_legales };
     }
 
     // Obtener casos activos
@@ -53,6 +53,7 @@ export default function ListaActiveCases(props) {
         })
             .then(response => response.json())
             .then(data => {
+                console.log("Active cases...");
                 console.log(data);
                 setCasosActivos(data);
             })
@@ -84,7 +85,13 @@ export default function ListaActiveCases(props) {
         let rows = [];
         if (casosActivos.length)
         casosActivos.map((c) => {
-            rows.push(createData(c.id, formatDate(c.start), formatDate(c.last_update_date)))
+            rows.push(createData(
+                c.id,
+                formatDate(c.start),
+                formatDate(c.last_update_date),
+                c.cantidad_rechazos_mesa_entradas,
+                c.cantidad_rechazos_area_legales
+            ))
         });
         setRows(rows);
     }, [casosActivos])
@@ -115,6 +122,8 @@ export default function ListaActiveCases(props) {
                         <StyledTableCell>ID</StyledTableCell>
                         <StyledTableCell align="right">Fecha de inicio</StyledTableCell>
                         <StyledTableCell align="right">Fecha de última actualización</StyledTableCell>
+                        <StyledTableCell align="right">Rechazos por mesa de entradas</StyledTableCell>
+                        <StyledTableCell align="right">Rechazos por área de legales</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -128,6 +137,8 @@ export default function ListaActiveCases(props) {
                             </StyledTableCell>
                             <StyledTableCell align="right">{row.fecha_inicio}</StyledTableCell>
                             <StyledTableCell align="right">{row.fecha_ultima_actualizacion}</StyledTableCell>
+                            <StyledTableCell align="right">{row.cantidad_rechazos_mesa_entradas}</StyledTableCell>
+                            <StyledTableCell align="right">{row.cantidad_rechazos_area_legales}</StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>

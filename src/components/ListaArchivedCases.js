@@ -33,8 +33,8 @@ export default function ListaArchivedCases(props) {
     const [cantCasosArchivados, setCantCasosArchivados] = useState(null);
     const [rows, setRows] = useState([]);
 
-    function createData(id, fecha_inicio, fecha_finalizacion, fecha_ultima_actualizacion) {
-        return { id, fecha_inicio, fecha_finalizacion, fecha_ultima_actualizacion };
+    function createData(id, fecha_inicio, fecha_finalizacion, fecha_ultima_actualizacion, cantidad_rechazos_mesa_entradas, cantidad_rechazos_area_legales) {
+        return { id, fecha_inicio, fecha_finalizacion, fecha_ultima_actualizacion, cantidad_rechazos_mesa_entradas, cantidad_rechazos_area_legales };
     }
 
     // Obtener casos activos
@@ -52,7 +52,7 @@ export default function ListaArchivedCases(props) {
         })
             .then(response => response.json())
             .then(data => {
-                console.log("Casos archivados");
+                console.log("Casos archivados:");
                 console.log(data);
                 setCasosArchivados(data);
             })
@@ -81,13 +81,17 @@ export default function ListaArchivedCases(props) {
 
     // Actualizar tabla cuando se actualicen los casos activos
     useEffect(() => {
-        console.log("Casos archivados antes de actualizar");
-        console.log(casosArchivados);
         let rows = [];
-        console.log(casosArchivados.length);
         if (casosArchivados.length)
         casosArchivados.map((c) => {
-            rows.push(createData(c.id, formatDate(c.start), formatDate(c.end_date), formatDate(c.last_update_date)))
+            rows.push(createData(
+                c.id,
+                formatDate(c.start),
+                formatDate(c.end_date),
+                formatDate(c.last_update_date),
+                c.cantidad_rechazos_mesa_entradas,
+                c.cantidad_rechazos_area_legales
+            ))
         });
         setRows(rows);
     }, [casosArchivados])
@@ -118,6 +122,8 @@ export default function ListaArchivedCases(props) {
                         <StyledTableCell align="right">Fecha de inicio</StyledTableCell>
                         <StyledTableCell align="right">Fecha de finalización</StyledTableCell>
                         <StyledTableCell align="right">Fecha de última actualización</StyledTableCell>
+                        <StyledTableCell align="right">Rechazos por mesa de entradas</StyledTableCell>
+                        <StyledTableCell align="right">Rechazos por área de legales</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -132,6 +138,8 @@ export default function ListaArchivedCases(props) {
                             <StyledTableCell align="right">{row.fecha_inicio}</StyledTableCell>
                             <StyledTableCell align="right">{row.fecha_finalizacion}</StyledTableCell>
                             <StyledTableCell align="right">{row.fecha_ultima_actualizacion}</StyledTableCell>
+                            <StyledTableCell align="right">{row.cantidad_rechazos_mesa_entradas}</StyledTableCell>
+                            <StyledTableCell align="right">{row.cantidad_rechazos_area_legales}</StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>

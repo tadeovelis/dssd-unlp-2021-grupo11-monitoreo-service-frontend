@@ -35,13 +35,13 @@ export default function Dashboard(props) {
             */
         })
             .then(response => response.json()
-            .then(data => {
-                //console.log(response);
-                console.log("Average time...");
-                console.log(data);
-                setAverageTime(data.toFixed(4));
-            })
-            .catch(error => console.error(error)));
+                .then(data => {
+                    //console.log(response);
+                    console.log("Average time...");
+                    console.log(data);
+                    setAverageTime(data.toFixed(4));
+                })
+                .catch(error => console.error(error)));
     }
 
     // Obtener cantidad rechazos mesa de entradas
@@ -58,15 +58,14 @@ export default function Dashboard(props) {
             */
         })
             .then(response => response.json()
-            .then(data => {
-                //console.log(response);
-                console.log("Rechazos mesa entradas...");
-                console.log(data);
-                if (response.ok) {
-                    setCantidadRechazosMesaEntradas(data);
-                }
-            })
-            .catch(error => console.error(error)));
+                .then(data => {
+                    console.log("Cantidad rechazos mesa entradas...");
+                    console.log(data);
+                    if (response.ok) {
+                        setCantidadRechazosMesaEntradas(data);
+                    }
+                })
+                .catch(error => console.error(error)));
     }
 
     // Obtener cantidad rechazos legales
@@ -83,15 +82,14 @@ export default function Dashboard(props) {
             */
         })
             .then(response => response.json()
-            .then(data => {
-                //console.log(response);
-                console.log("Rechazos legales...");
-                console.log(data);
-                if (response.ok) {
-                    setCantidadRechazosLegales(data);
-                }
-            })
-            .catch(error => console.error(error)));
+                .then(data => {
+                    console.log("Cantidad rechazos legales...");
+                    console.log(data);
+                    if (response.ok) {
+                        setCantidadRechazosLegales(data);
+                    }
+                })
+                .catch(error => console.error(error)));
     }
 
 
@@ -113,20 +111,14 @@ export default function Dashboard(props) {
                 </Typography>
 
                 {/* Box de las dos listas */}
-                <Box
-                    sx={{
-                        mb: 4,
-                        display: 'flex',
-                        gap: 10
-                    }}
-                >
-                    <Box>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
                         <ListaActiveCases />
-                    </Box>
-                    <Box>
+                    </Grid>
+                    <Grid item xs={12}>
                         <ListaArchivedCases />
-                    </Box>
-                </Box>
+                    </Grid>
+                </Grid>
 
                 {/* Divider para separar */}
                 <Divider
@@ -155,7 +147,7 @@ export default function Dashboard(props) {
                         <CardMetrica
                             title="Cantidad de rechazos por parte del área de legales"
                             color="#f12c28"
-                            valor={cantidadRechazosLegales ? cantidadRechazosLegales : '-'}                        />
+                            valor={cantidadRechazosLegales ? cantidadRechazosLegales : '-'} />
                     </Grid>
                 </Grid>
             </Paper>
