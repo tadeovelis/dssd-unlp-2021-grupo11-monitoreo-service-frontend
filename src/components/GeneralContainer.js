@@ -22,7 +22,7 @@ export default function GeneralContainer(props) {
                     backgroundImage: `url(${ImageBackground})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    boxShadow: 'inset 0 0 200px 30px rgba(0, 0, 0, 0.7)',
+                    boxShadow: 'inset 0 0 200px 30px rgba(0, 0, 0, 0.5)',
                 }}
             >
                 <Box
