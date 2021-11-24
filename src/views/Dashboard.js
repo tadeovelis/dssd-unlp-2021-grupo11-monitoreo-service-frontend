@@ -140,14 +140,14 @@ export default function Dashboard(props) {
                         <CardMetrica
                             title="Cantidad de rechazos por parte de mesa de entradas"
                             color="#ffa800"
-                            valor={cantidadRechazosMesaEntradas ? cantidadRechazosMesaEntradas : '-'}
+                            valor={cantidadRechazosMesaEntradas >= 0 ? cantidadRechazosMesaEntradas : '-'}
                         />
                     </Grid>
                     <Grid item xs={4}>
                         <CardMetrica
                             title="Cantidad de rechazos por parte del área de legales"
                             color="#f12c28"
-                            valor={cantidadRechazosLegales ? cantidadRechazosLegales : '-'} />
+                            valor={cantidadRechazosLegales >= 0 ? cantidadRechazosLegales : '-'} />
                     </Grid>
                 </Grid>
             </Paper>

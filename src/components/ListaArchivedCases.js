@@ -1,4 +1,4 @@
-import { Grid, Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow, Typography } from "@mui/material";
+import { Alert, Grid, Paper, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { styled } from '@mui/material/styles';
 
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: "#393939",
+        backgroundColor: theme.palette.common.black,
         color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
@@ -83,16 +83,16 @@ export default function ListaArchivedCases(props) {
     useEffect(() => {
         let rows = [];
         if (casosArchivados.length)
-        casosArchivados.map((c) => {
-            rows.push(createData(
-                c.id,
-                formatDate(c.start),
-                formatDate(c.end_date),
-                formatDate(c.last_update_date),
-                c.cantidad_rechazos_mesa_entradas,
-                c.cantidad_rechazos_area_legales
-            ))
-        });
+            casosArchivados.map((c) => {
+                rows.push(createData(
+                    c.id,
+                    formatDate(c.start),
+                    formatDate(c.end_date),
+                    formatDate(c.last_update_date),
+                    c.cantidad_rechazos_mesa_entradas,
+                    c.cantidad_rechazos_area_legales
+                ))
+            });
         setRows(rows);
     }, [casosArchivados])
 
@@ -106,44 +106,58 @@ export default function ListaArchivedCases(props) {
                         Lista de casos <b>archivados</b>
                     </Typography>
                 </Grid>
-                <Grid item xs={4}>
-                    <Typography
-                        variant="subtitle1"
-                    >
-                        Total: <b>{cantCasosArchivados}</b>
-                    </Typography>
-                </Grid>
-            </Grid>
-
-            <Table sx={{ minWidth: 500 }}>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell>ID</StyledTableCell>
-                        <StyledTableCell align="right">Fecha de inicio</StyledTableCell>
-                        <StyledTableCell align="right">Fecha de finalización</StyledTableCell>
-                        <StyledTableCell align="right">Fecha de última actualización</StyledTableCell>
-                        <StyledTableCell align="right">Rechazos por mesa de entradas</StyledTableCell>
-                        <StyledTableCell align="right">Rechazos por área de legales</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <StyledTableRow
-                            key={row.id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                {cantCasosArchivados > 0 &&
+                    <Grid item xs={4}>
+                        <Typography
+                            variant="subtitle1"
                         >
-                            <StyledTableCell component="th" scope="row">
-                                {row.id}
-                            </StyledTableCell>
-                            <StyledTableCell align="right">{row.fecha_inicio}</StyledTableCell>
-                            <StyledTableCell align="right">{row.fecha_finalizacion}</StyledTableCell>
-                            <StyledTableCell align="right">{row.fecha_ultima_actualizacion}</StyledTableCell>
-                            <StyledTableCell align="right">{row.cantidad_rechazos_mesa_entradas}</StyledTableCell>
-                            <StyledTableCell align="right">{row.cantidad_rechazos_area_legales}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                            Total: <b>{cantCasosArchivados}</b>
+                        </Typography>
+                    </Grid>
+                }
+            </Grid>
+            {cantCasosArchivados > 0 ?
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 500 }}>
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell>ID</StyledTableCell>
+                                <StyledTableCell align="right">Fecha de inicio</StyledTableCell>
+                                <StyledTableCell align="right">Fecha de finalización</StyledTableCell>
+                                <StyledTableCell align="right">Fecha de última actualización</StyledTableCell>
+                                <StyledTableCell align="right">Rechazos por mesa de entradas</StyledTableCell>
+                                <StyledTableCell align="right">Rechazos por área de legales</StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row) => (
+                                <StyledTableRow
+                                    key={row.id}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <StyledTableCell component="th" scope="row">
+                                        {row.id}
+                                    </StyledTableCell>
+                                    <StyledTableCell align="right">{row.fecha_inicio}</StyledTableCell>
+                                    <StyledTableCell align="right">{row.fecha_finalizacion}</StyledTableCell>
+                                    <StyledTableCell align="right">{row.fecha_ultima_actualizacion}</StyledTableCell>
+                                    <StyledTableCell align="right">{row.cantidad_rechazos_mesa_entradas}</StyledTableCell>
+                                    <StyledTableCell align="right">{row.cantidad_rechazos_area_legales}</StyledTableCell>
+                                </StyledTableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                :
+                <Alert
+                    severity="info"
+                    sx={{
+                        maxWidth: 'fit-content'
+                    }}
+                >
+                    Todavía no hay ningún caso archivado
+                </Alert>
+            }
         </Box>
     )
 }
