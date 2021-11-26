@@ -8,21 +8,20 @@ import { useEffect, useState } from "react";
 import Tabla from "./Tabla";
 
 
-export default function ListaActiveCases(props) {
+export default function ListaUsuarios(props) {
 
-    const [casosActivos, setCasosActivos] = useState([]);
-    const [cantCasosActivos, setCantCasosActivos] = useState(null);
+    const [usuarios, setUsuarios] = useState([]);
     const [rows, setRows] = useState([]);
-    const [casosActivosCargados, setCasosActivosCargados] = useState(false);
+    const [usuariosCargados, setUsuariosCargados] = useState(false);
 
-    function createData(id, fecha_inicio, fecha_ultima_actualizacion, cantidad_rechazos_mesa_entradas, cantidad_rechazos_area_legales) {
-        return { id, fecha_inicio, fecha_ultima_actualizacion, cantidad_rechazos_mesa_entradas, cantidad_rechazos_area_legales };
+    function createData(id, firstname, lastname, userName, job_title, creation_date, last_update_date, last_connection, enabled) {
+        return { id, firstname, lastname, userName, job_title, creation_date, last_update_date, last_connection, enabled };
     }
 
     // Obtener casos activos
     useEffect(() => {
-        setCasosActivosCargados(false);
-        let ruta = "api/activeCase";
+        setUsuariosCargados(false);
+        let ruta = "api/user";
 
         fetch(env("BACKEND_URL") + ruta, {
             method: 'GET',
@@ -35,49 +34,34 @@ export default function ListaActiveCases(props) {
         })
             .then(response => response.json())
             .then(data => {
-                console.log("Active cases...");
+                console.log("Usuarios...");
                 console.log(data);
-                setCasosActivos(data);
-                setCasosActivosCargados(true);
+                setUsuarios(data);
+                setUsuariosCargados(true);
             })
             .catch(error => console.error(error));
     }, [])
 
-    // Obtener cant de casos activos
-    useEffect(() => {
-        let ruta = "api/activeCaseCount";
-
-        fetch(env("BACKEND_URL") + ruta, {
-            method: 'GET',
-            credentials: 'include',
-            /*
-            headers: {
-                'Authorization': 'Bearer ' + getCookie("access_token")
-            }
-            */
-        })
-            .then(response => response.json())
-            .then(data => {
-                setCantCasosActivos(data);
-            })
-            .catch(error => console.error(error));
-    }, [])
 
     // Actualizar tabla cuando se actualicen los casos activos
     useEffect(() => {
         let rows = [];
-        if (casosActivos.length)
-            casosActivos.map((c) => {
+        if (usuarios.length)
+            usuarios.map((p) => {
                 rows.push(createData(
-                    c.id,
-                    formatDate(c.start),
-                    formatDate(c.last_update_date),
-                    c.cantidad_rechazos_mesa_entradas,
-                    c.cantidad_rechazos_area_legales
+                    p.id,
+                    p.firstname,
+                    p.lastname,
+                    p.userName,
+                    p.job_title,
+                    formatDate(p.creation_date),
+                    formatDate(p.last_update_date),
+                    formatDate(p.last_connection),
+                    p.enabled
                 ))
             });
         setRows(rows);
-    }, [casosActivos])
+    }, [usuarios])
 
 
     return (
@@ -87,25 +71,26 @@ export default function ListaActiveCases(props) {
                     <Typography
                         variant="subtitle1"
                     >
-                        Lista de casos <b>activos</b>
+                        Lista de <b>usuarios</b>
                     </Typography>
                 </Grid>
-                {cantCasosActivos > 0 &&
+                {usuarios.length > 0 &&
                     <Grid item xs={4}>
                         <Typography
                             variant="subtitle1"
                         >
-                            Total: <b>{cantCasosActivos}</b>
+                            Total: <b>{usuarios.length}</b>
                         </Typography>
                     </Grid>
                 }
             </Grid>
-            {casosActivosCargados ? (
-                cantCasosActivos > 0 ?
+            {usuariosCargados ? (
+                usuarios.length > 0 ?
                     <Tabla
                         headers={[
-                            'ID', 'Fecha de inicio', 'Fecha de última actualización',
-                            'Rechazos por mesa de entradas', 'Rechazos por área de legales'
+                            "ID", "Nombre", "Apellido", "Nombre de usuario",
+                            "Rol de empleado", "Fecha de creación", "Fecha de última actualización",
+                            "Fecha de última conexión", "Estado de habilitación"
                         ]}
                         data={rows}
                     />
@@ -116,7 +101,7 @@ export default function ListaActiveCases(props) {
                             maxWidth: 'fit-content'
                         }}
                     >
-                        No hay ningún caso activo
+                        No hay ningún usuario
                     </Alert>
             ) : (
                 <Typography>Cargando...</Typography>

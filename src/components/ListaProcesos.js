@@ -8,21 +8,20 @@ import { useEffect, useState } from "react";
 import Tabla from "./Tabla";
 
 
-export default function ListaActiveCases(props) {
+export default function ListaProcesos(props) {
 
-    const [casosActivos, setCasosActivos] = useState([]);
-    const [cantCasosActivos, setCantCasosActivos] = useState(null);
+    const [procesos, setProcesos] = useState([]);
     const [rows, setRows] = useState([]);
-    const [casosActivosCargados, setCasosActivosCargados] = useState(false);
+    const [procesosCargados, setProcesosCargados] = useState(false);
 
-    function createData(id, fecha_inicio, fecha_ultima_actualizacion, cantidad_rechazos_mesa_entradas, cantidad_rechazos_area_legales) {
-        return { id, fecha_inicio, fecha_ultima_actualizacion, cantidad_rechazos_mesa_entradas, cantidad_rechazos_area_legales };
+    function createData(id, name, deploymentDate, last_update_date, activationState) {
+        return { id, name, deploymentDate, last_update_date, activationState };
     }
 
     // Obtener casos activos
     useEffect(() => {
-        setCasosActivosCargados(false);
-        let ruta = "api/activeCase";
+        setProcesosCargados(false);
+        let ruta = "api/process";
 
         fetch(env("BACKEND_URL") + ruta, {
             method: 'GET',
@@ -35,49 +34,30 @@ export default function ListaActiveCases(props) {
         })
             .then(response => response.json())
             .then(data => {
-                console.log("Active cases...");
+                console.log("Procesos...");
                 console.log(data);
-                setCasosActivos(data);
-                setCasosActivosCargados(true);
+                setProcesos(data);
+                setProcesosCargados(true);
             })
             .catch(error => console.error(error));
     }, [])
 
-    // Obtener cant de casos activos
-    useEffect(() => {
-        let ruta = "api/activeCaseCount";
-
-        fetch(env("BACKEND_URL") + ruta, {
-            method: 'GET',
-            credentials: 'include',
-            /*
-            headers: {
-                'Authorization': 'Bearer ' + getCookie("access_token")
-            }
-            */
-        })
-            .then(response => response.json())
-            .then(data => {
-                setCantCasosActivos(data);
-            })
-            .catch(error => console.error(error));
-    }, [])
 
     // Actualizar tabla cuando se actualicen los casos activos
     useEffect(() => {
         let rows = [];
-        if (casosActivos.length)
-            casosActivos.map((c) => {
+        if (procesos.length)
+            procesos.map((p) => {
                 rows.push(createData(
-                    c.id,
-                    formatDate(c.start),
-                    formatDate(c.last_update_date),
-                    c.cantidad_rechazos_mesa_entradas,
-                    c.cantidad_rechazos_area_legales
+                    p.id,
+                    p.name,
+                    formatDate(p.deploymentDate),
+                    formatDate(p.last_update_date),
+                    p.activationState
                 ))
             });
         setRows(rows);
-    }, [casosActivos])
+    }, [procesos])
 
 
     return (
@@ -87,25 +67,25 @@ export default function ListaActiveCases(props) {
                     <Typography
                         variant="subtitle1"
                     >
-                        Lista de casos <b>activos</b>
+                        Lista de <b>procesos</b>
                     </Typography>
                 </Grid>
-                {cantCasosActivos > 0 &&
+                {procesos.length > 0 &&
                     <Grid item xs={4}>
                         <Typography
                             variant="subtitle1"
                         >
-                            Total: <b>{cantCasosActivos}</b>
+                            Total: <b>{procesos.length}</b>
                         </Typography>
                     </Grid>
                 }
             </Grid>
-            {casosActivosCargados ? (
-                cantCasosActivos > 0 ?
+            {procesosCargados ? (
+                procesos.length > 0 ?
                     <Tabla
                         headers={[
-                            'ID', 'Fecha de inicio', 'Fecha de última actualización',
-                            'Rechazos por mesa de entradas', 'Rechazos por área de legales'
+                            'ID', 'Nombre', 'Fecha de deployment',
+                            'Fecha de última actualización', 'Estado de activación'
                         ]}
                         data={rows}
                     />
@@ -116,7 +96,7 @@ export default function ListaActiveCases(props) {
                             maxWidth: 'fit-content'
                         }}
                     >
-                        No hay ningún caso activo
+                        No hay ningún proceso
                     </Alert>
             ) : (
                 <Typography>Cargando...</Typography>

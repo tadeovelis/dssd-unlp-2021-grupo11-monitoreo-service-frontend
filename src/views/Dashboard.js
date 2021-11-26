@@ -5,6 +5,8 @@ import CardMetrica from "../components/CardMetrica";
 import ListaActiveCases from "../components/ListaActiveCases";
 import ListaArchivedCases from "../components/ListaArchivedCases";
 import env from "@beam-australia/react-env";
+import ListaProcesos from "../components/ListaProcesos";
+import ListaUsuarios from "../components/ListaUsuarios";
 
 
 export default function Dashboard(props) {
@@ -112,6 +114,12 @@ export default function Dashboard(props) {
 
                 {/* Box de las dos listas */}
                 <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <ListaProcesos />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <ListaUsuarios />
+                    </Grid>
                     <Grid item xs={12}>
                         <ListaActiveCases />
                     </Grid>

@@ -1,4 +1,4 @@
-import { TableCell, tableCellClasses } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from "@mui/material";
 import { styled } from "@mui/system";
 
 
@@ -25,32 +25,32 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export default function Tabla(props) {
-    
+
     const { headers, data } = props;
 
     return (
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 500 }}>
+            <Table size="small" sx={{ minWidth: 500 }}>
                 <TableHead>
                     <TableRow>
-                        {headers.map((r) => {
-                            <StyledTableCell align="right">{r}</StyledTableCell>
-                        })}
+                        {headers.map((h) =>
+                            <StyledTableCell key={h} align="center">{h}</StyledTableCell>
+                        )}
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map((d) => (
+                    {data.map((d) =>
                         <StyledTableRow
                             key={d.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             {Object.keys(d).map((val, k) => {
                                 return (
-                                    <StyledTableCell align="right" k={k}>{val}</StyledTableCell>
+                                    <StyledTableCell align="center" key={k}>{d[val]}</StyledTableCell>
                                 )
                             })}
                         </StyledTableRow>
-                    ))}
+                    )}
                 </TableBody>
             </Table>
         </TableContainer>
