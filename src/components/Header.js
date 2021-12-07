@@ -1,6 +1,6 @@
 import { React, Component } from 'react';
 
-import { Box, AppBar, Toolbar, IconButton, Typography, Slide, useScrollTrigger } from '@mui/material';
+import { Box, AppBar, Typography, Slide, useScrollTrigger } from '@mui/material';
 import Logout from './Logout';
 import { estoyEnDashboard } from '../helpers/helpers';
 
@@ -22,11 +22,6 @@ function HideOnScroll(props) {
 }
 
 export default class Header extends Component {
-    constructor(props) {
-        super(props);
-
-
-    }
 
     render() {
         return (

@@ -1,5 +1,5 @@
 import { FormControl, Grid, InputAdornment, TextField, Typography, Button, Tooltip, IconButton, Alert, CircularProgress } from "@mui/material";
-import { Box, palette } from "@mui/system";
+import { Box } from "@mui/system";
 
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';

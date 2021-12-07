@@ -6,9 +6,6 @@ const Dashboard = lazy(() => import("./views/Dashboard.js"));
 const GeneralContainer = lazy(() => import("./components/GeneralContainer.js"));
 
 class AppRoutes extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (

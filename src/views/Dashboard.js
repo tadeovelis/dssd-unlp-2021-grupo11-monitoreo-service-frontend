@@ -1,4 +1,4 @@
-import { Card, CardContent, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Divider, Grid, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import CardMetrica from "../components/CardMetrica";

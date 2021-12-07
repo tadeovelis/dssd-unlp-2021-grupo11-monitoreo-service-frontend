@@ -15,7 +15,6 @@ Recibe las props:
 */
 
 import { Alert, AlertTitle, Snackbar } from "@mui/material";
-import { useEffect } from "react";
 
 
 export function MyAlert(props) {

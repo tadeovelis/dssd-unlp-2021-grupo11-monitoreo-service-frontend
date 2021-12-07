@@ -1,11 +1,10 @@
-import { Typography, IconButton, Grid, Link } from "@mui/material";
+import { Typography, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 import 'hover.css';
 
 import env from "@beam-australia/react-env";
-import { useEffect } from "react";
 
 export function Footer(props) {
 
@@ -29,7 +28,7 @@ export function Footer(props) {
                 </Typography>
             </Box>
             <Box>
-                <a className="hvr-grow" href={env("GITHUB_REPO_FRONTEND_URL")} target="_blank">
+                <a className="hvr-grow" href={env("GITHUB_REPO_FRONTEND_URL")} rel="noreferrer" target="_blank">
                     <IconButton>
                         <GitHubIcon color="primary" />
                     </IconButton>

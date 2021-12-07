@@ -1,9 +1,8 @@
-import { Alert, Grid, Paper, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Alert, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { styled } from '@mui/material/styles';
 
 import env from "@beam-australia/react-env";
-import { formatDate, getCookie } from "../helpers/helpers";
+import { formatDate } from "../helpers/helpers";
 import { useEffect, useState } from "react";
 import Tabla from "./Tabla";
 
