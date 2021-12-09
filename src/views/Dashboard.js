@@ -1,4 +1,4 @@
-import { Divider, Grid, Paper, Typography } from "@mui/material";
+import { Checkbox, Divider, FormControlLabel, Grid, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import CardMetrica from "../components/CardMetrica";
@@ -7,6 +7,7 @@ import ListaArchivedCases from "../components/ListaArchivedCases";
 import env from "@beam-australia/react-env";
 import ListaProcesos from "../components/ListaProcesos";
 import ListaUsuarios from "../components/ListaUsuarios";
+import PaisesEstados from "../components/PaisesEstados";
 
 
 export default function Dashboard(props) {
@@ -14,6 +15,8 @@ export default function Dashboard(props) {
     const [averageTime, setAverageTime] = useState(null);
     const [cantidadRechazosMesaEntradas, setCantidadRechazosMesaEntradas] = useState(null);
     const [cantidadRechazosLegales, setCantidadRechazosLegales] = useState(null);
+
+    const [paisesEstadosChecked, setPaisesEstadosChecked] = useState(false);
 
 
     // Obtener las métricas
@@ -94,6 +97,11 @@ export default function Dashboard(props) {
                 .catch(error => console.error(error)));
     }
 
+    /* Países y estados JSON */
+    const handleChangePaisesEstados = (event) => {
+        setPaisesEstadosChecked(event.target.checked);
+    };
+
 
 
     return (
@@ -158,6 +166,29 @@ export default function Dashboard(props) {
                             valor={cantidadRechazosLegales >= 0 ? cantidadRechazosLegales : '-'} />
                     </Grid>
                 </Grid>
+
+                {/* Divider para separar */}
+                <Divider
+                    sx={{
+                        my: 4
+                    }}
+                />
+
+                {/* Paises y estados JSON */}
+                <FormControlLabel
+                    label="Consultar servicio de países y estados"
+                    control={
+                        <Checkbox
+                            checked={paisesEstadosChecked}
+                            onChange={handleChangePaisesEstados}
+
+                        />
+                    }
+                />
+
+                {paisesEstadosChecked &&
+                    <PaisesEstados />
+                }
             </Paper>
         </Box>
     )
